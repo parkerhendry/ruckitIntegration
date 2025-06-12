@@ -1,0 +1,16 @@
+{
+    "name": "Ruckit Integration",
+    "supportEmail": "support@traxxisgps.com",
+    "version": "1.0",
+    "items": [
+        {
+            "page": "device",
+            "click": "",
+            "buttonName": {
+                "en": "Ruckit Fields"
+            },
+            "svgIcon": ""
+        }
+    ],
+    "isSigned": false
+}
