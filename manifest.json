@@ -5,7 +5,7 @@
     "items": [
         {
             "page": "device",
-            "click": "",
+            "click": "https://parkerhendry.github.io/ruckitIntegration/addin.js",
             "buttonName": {
                 "en": "Ruckit Fields"
             },

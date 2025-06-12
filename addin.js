@@ -192,6 +192,44 @@ geotab.customButtons.ruckitDeviceMapping = (event, api, state) => {
     }
 
     /**
+     * Check if credentials are already in use by another device
+     */
+    async function validateCredentials(token, device, driver) {
+        try {
+            const allMappings = await getRuckitMappings();
+            
+            for (const mapping of allMappings) {
+                if (!mapping.details) continue;
+                
+                // Skip the current device's mapping
+                if (mapping.details['gt-device'] === currentDeviceId) continue;
+                
+                // Check if any of the credentials are already in use
+                const existingToken = mapping.details['ri-token'];
+                const existingDevice = mapping.details['ri-device'];
+                const existingDriver = mapping.details['ri-driver'];
+                
+                if (existingToken === token && existingToken !== 'TOKEN') {
+                    return `Token "${token}" is already in use by device ${mapping.details['gt-device']}`;
+                }
+                
+                if (existingDevice === device && existingDevice !== 'DeviceID') {
+                    return `Device ID "${device}" is already in use by device ${mapping.details['gt-device']}`;
+                }
+                
+                if (existingDriver === driver && existingDriver !== 'DriverID') {
+                    return `Driver ID "${driver}" is already in use by device ${mapping.details['gt-device']}`;
+                }
+            }
+            
+            return null; // No conflicts found
+        } catch (error) {
+            console.error('Error validating credentials:', error);
+            return 'Error validating credentials';
+        }
+    }
+
+    /**
      * Handle submit button click
      */
     async function handleSubmit() {
@@ -214,18 +252,35 @@ geotab.customButtons.ruckitDeviceMapping = (event, api, state) => {
             return;
         }
 
+        // Check if credentials are default values
+        if (token === 'TOKEN' || device === 'DeviceID' || driver === 'DriverID') {
+            showStatus('Please enter actual values, not default placeholders', 'error');
+            return;
+        }
+
         try {
+            showStatus('Validating credentials...', 'info');
+
+            // Validate credentials are not already in use
+            const validationError = await validateCredentials(token, device, driver);
+            if (validationError) {
+                showStatus(validationError, 'error');
+                return;
+            }
+
             showStatus('Saving mapping...', 'info');
 
             const mappingData = {
-                type: 'ri-device',
-                device: { id: currentDeviceId },
+                addInId: "aTMyNTA4NjktMzIxOC02YTQ",
                 details: {
+                    'date': new Date().toISOString(),
                     'gt-device': currentDeviceId,
                     'ri-token': token,
                     'ri-device': device,
-                    'ri-driver': driver
-                }
+                    'ri-driver': driver,
+                    'type': 'ri-device'
+                },
+                id: null
             };
 
             if (existingMapping) {
