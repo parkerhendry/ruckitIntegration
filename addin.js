@@ -57,6 +57,29 @@ geotab.customButtons.ruckitDeviceMapping = (event, api, state) => {
     }
 
     /**
+     * Get device information from Geotab
+     */
+    async function getDeviceInfo(deviceId) {
+        try {
+            const devices = await makeGeotabCall("Get", "Device", { 
+                search: { id: deviceId } 
+            });
+            
+            if (devices && devices.length > 0) {
+                return {
+                    name: devices[0].name || 'Unknown Device',
+                    serialNumber: devices[0].serialNumber || ''
+                };
+            }
+            
+            return { name: 'Unknown Device', serialNumber: '' };
+        } catch (error) {
+            console.error('Error fetching device info:', error);
+            return { name: 'Unknown Device', serialNumber: '' };
+        }
+    }
+
+    /**
      * Find existing mapping for current device
      */
     async function findExistingMapping(deviceId) {
@@ -198,27 +221,38 @@ geotab.customButtons.ruckitDeviceMapping = (event, api, state) => {
         try {
             const allMappings = await getRuckitMappings();
             
+            // Create a map of device IDs to device names for better error messages
+            const deviceInfoMap = {};
+            
             for (const mapping of allMappings) {
                 if (!mapping.details) continue;
                 
+                const gtDevice = mapping.details['gt-device'];
+                if (gtDevice && !deviceInfoMap[gtDevice]) {
+                    // Get device info if we don't have it yet
+                    const deviceInfo = await getDeviceInfo(gtDevice);
+                    deviceInfoMap[gtDevice] = deviceInfo.name;
+                }
+                
                 // Skip the current device's mapping
-                if (mapping.details['gt-device'] === currentDeviceId) continue;
+                if (gtDevice === currentDeviceId) continue;
                 
                 // Check if any of the credentials are already in use
                 const existingToken = mapping.details['ri-token'];
                 const existingDevice = mapping.details['ri-device'];
                 const existingDriver = mapping.details['ri-driver'];
+                const deviceName = deviceInfoMap[gtDevice] || 'Unknown Device';
                 
                 if (existingToken === token && existingToken !== 'TOKEN') {
-                    return `Token "${token}" is already in use by device ${mapping.details['gt-device']}`;
+                    return `Token "${token}" is already in use by device "${deviceName}"`;
                 }
                 
                 if (existingDevice === device && existingDevice !== 'DeviceID') {
-                    return `Device ID "${device}" is already in use by device ${mapping.details['gt-device']}`;
+                    return `Device ID "${device}" is already in use by device "${deviceName}"`;
                 }
                 
                 if (existingDriver === driver && existingDriver !== 'DriverID') {
-                    return `Driver ID "${driver}" is already in use by device ${mapping.details['gt-device']}`;
+                    return `Driver ID "${driver}" is already in use by device "${deviceName}"`;
                 }
             }
             
@@ -268,6 +302,11 @@ geotab.customButtons.ruckitDeviceMapping = (event, api, state) => {
                 return;
             }
 
+            showStatus('Getting device information...', 'info');
+
+            // Get device information
+            const deviceInfo = await getDeviceInfo(currentDeviceId);
+
             showStatus('Saving mapping...', 'info');
 
             const mappingData = {
@@ -275,6 +314,8 @@ geotab.customButtons.ruckitDeviceMapping = (event, api, state) => {
                 details: {
                     'date': new Date().toISOString(),
                     'gt-device': currentDeviceId,
+                    'name': deviceInfo.name,
+                    'gt-sn': deviceInfo.serialNumber,
                     'ri-token': token,
                     'ri-device': device,
                     'ri-driver': driver,
@@ -330,19 +371,27 @@ geotab.customButtons.ruckitDeviceMapping = (event, api, state) => {
         }
 
         try {
+            showStatus('Getting device information...', 'info');
+
+            // Get device information
+            const deviceInfo = await getDeviceInfo(currentDeviceId);
+
             showStatus('Clearing mapping...', 'info');
 
             const mappingData = {
-                id: existingMapping.id,
-                version: existingMapping.version,
-                type: 'ri-device',
-                device: { id: currentDeviceId },
+                addInId: "aTMyNTA4NjktMzIxOC02YTQ",
                 details: {
+                    'date': new Date().toISOString(),
                     'gt-device': currentDeviceId,
+                    'name': deviceInfo.name,
+                    'gt-sn': deviceInfo.serialNumber,
                     'ri-token': 'TOKEN',
                     'ri-device': 'DeviceID',
-                    'ri-driver': 'DriverID'
-                }
+                    'ri-driver': 'DriverID',
+                    'type': 'ri-device'
+                },
+                id: existingMapping.id,
+                version: existingMapping.version
             };
 
             await makeGeotabCall("Set", "AddInData", { entity: mappingData });
