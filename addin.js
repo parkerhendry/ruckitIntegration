@@ -133,20 +133,17 @@ geotab.customButtons.ruckitDeviceMapping = (event, api, state) => {
                     <div id="company-logo" style="
                         width: 96px;
                         height: 96px;
-                        background: rgba(255,255,255,0.2);
-                        border-radius: 8px;
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        font-size: 12px;
-                        color: white;
                     ">
-                        <img src="https://traxxisgps.com/wp-content/uploads/elementor/thumbs/Traxxis-refresh-logo_horizontal-min-1-qjgvd5cr9kxu5eay6trn10pbylz31ardqnqdluuew0.webp" alt="Company Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 7px;">
+                        <!-- Replace this div with your logo image -->
+                        <img src="https://traxxisgps.com/wp-content/uploads/elementor/thumbs/Traxxis-refresh-logo_horizontal-min-1-qjgvd5cr9kxu5eay6trn10pbylz31ardqnqdluuew0.webp" alt="Company Logo" style="width: 100%; height: 100%; object-fit: contain;">
                     </div>
                     <div style="
                         font-weight: 600;
                         color: white;
-                        font-size: 16px;
+                        font-size: 20px;
                         text-shadow: 0 1px 2px rgba(0,0,0,0.1);
                     ">
                         Ruckit Device Mapping
