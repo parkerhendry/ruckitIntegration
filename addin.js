@@ -105,15 +105,16 @@ geotab.customButtons.ruckitDeviceMapping = (event, api, state) => {
             position: absolute;
             top: 100%;
             right: 0;
-            background: white;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 15px;
-            min-width: 280px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border: 2px solid #ff6b35;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,107,53,0.1);
+            padding: 0;
+            min-width: 320px;
             z-index: 10000;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-size: 14px;
+            overflow: hidden;
         `;
 
         const defaultToken = existingMapping?.details?.['ri-token'] || 'TOKEN';
@@ -121,51 +122,167 @@ geotab.customButtons.ruckitDeviceMapping = (event, api, state) => {
         const defaultDriver = existingMapping?.details?.['ri-driver'] || 'DriverID';
 
         dropdown.innerHTML = `
-            <div style="margin-bottom: 10px; font-weight: bold; color: #333;">
-                Ruckit Device Mapping
+            <!-- Header with logo space -->
+            <div style="
+                background: linear-gradient(135deg, #ff6b35 0%, #ff8555 100%);
+                padding: 16px 20px;
+                margin: 0;
+                border-bottom: 1px solid rgba(255,255,255,0.2);
+            ">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div id="company-logo" style="
+                        width: 32px;
+                        height: 32px;
+                        background: rgba(255,255,255,0.2);
+                        border-radius: 6px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 12px;
+                        color: white;
+                        border: 1px solid rgba(255,255,255,0.3);
+                    ">
+                        <!-- Replace this div with your logo image -->
+                        <!-- <img src="https://traxxisgps.com/wp-content/uploads/elementor/thumbs/Traxxis-refresh-logo_horizontal-min-1-qjgvd5cr9kxu5eay6trn10pbylz31ardqnqdluuew0.webp" alt="Company Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 5px;"> -->
+                        LOGO
+                    </div>
+                    <div style="
+                        font-weight: 600;
+                        color: white;
+                        font-size: 16px;
+                        text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+                    ">
+                        Ruckit Device Mapping
+                    </div>
+                </div>
             </div>
-            <div style="margin-bottom: 10px;">
-                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Ruckit TOKEN:</label>
-                <input type="text" id="ruckit-token" value="${defaultToken}" 
-                       style="width: 100%; padding: 6px; border: 1px solid #ddd; border-radius: 3px; box-sizing: border-box;">
+
+            <!-- Form content -->
+            <div style="padding: 20px;">
+                <div style="margin-bottom: 16px;">
+                    <label style="
+                        display: block;
+                        margin-bottom: 6px;
+                        font-weight: 600;
+                        color: #2c3e50;
+                        font-size: 13px;
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
+                    ">Ruckit TOKEN:</label>
+                    <input type="text" id="ruckit-token" value="${defaultToken}" 
+                        style="
+                            width: 100%;
+                            padding: 10px 12px;
+                            border: 2px solid #e1e8ed;
+                            border-radius: 8px;
+                            box-sizing: border-box;
+                            font-size: 14px;
+                            transition: all 0.2s ease;
+                            background: #ffffff;
+                        "
+                        onfocus="this.style.borderColor='#4a90e2'; this.style.boxShadow='0 0 0 3px rgba(74,144,226,0.1)'"
+                        onblur="this.style.borderColor='#e1e8ed'; this.style.boxShadow='none'">
+                </div>
+                
+                <div style="margin-bottom: 16px;">
+                    <label style="
+                        display: block;
+                        margin-bottom: 6px;
+                        font-weight: 600;
+                        color: #2c3e50;
+                        font-size: 13px;
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
+                    ">Ruckit Device ID:</label>
+                    <input type="text" id="ruckit-device" value="${defaultDevice}" 
+                        style="
+                            width: 100%;
+                            padding: 10px 12px;
+                            border: 2px solid #e1e8ed;
+                            border-radius: 8px;
+                            box-sizing: border-box;
+                            font-size: 14px;
+                            transition: all 0.2s ease;
+                            background: #ffffff;
+                        "
+                        onfocus="this.style.borderColor='#4a90e2'; this.style.boxShadow='0 0 0 3px rgba(74,144,226,0.1)'"
+                        onblur="this.style.borderColor='#e1e8ed'; this.style.boxShadow='none'">
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <label style="
+                        display: block;
+                        margin-bottom: 6px;
+                        font-weight: 600;
+                        color: #2c3e50;
+                        font-size: 13px;
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
+                    ">Ruckit Driver ID:</label>
+                    <input type="text" id="ruckit-driver" value="${defaultDriver}" 
+                        style="
+                            width: 100%;
+                            padding: 10px 12px;
+                            border: 2px solid #e1e8ed;
+                            border-radius: 8px;
+                            box-sizing: border-box;
+                            font-size: 14px;
+                            transition: all 0.2s ease;
+                            background: #ffffff;
+                        "
+                        onfocus="this.style.borderColor='#4a90e2'; this.style.boxShadow='0 0 0 3px rgba(74,144,226,0.1)'"
+                        onblur="this.style.borderColor='#e1e8ed'; this.style.boxShadow='none'">
+                </div>
+                
+                <div style="display: flex; gap: 12px;">
+                    <button id="ruckit-clear" style="
+                        flex: 1;
+                        padding: 12px 16px;
+                        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+                        color: #495057;
+                        border: 2px solid #dee2e6;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        font-size: 14px;
+                        font-weight: 600;
+                        transition: all 0.2s ease;
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
+                    "
+                    onmouseover="this.style.background='linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%)'; this.style.transform='translateY(-1px)'"
+                    onmouseout="this.style.background='linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)'; this.style.transform='translateY(0)'">
+                        Clear
+                    </button>
+                    <button id="ruckit-submit" style="
+                        flex: 1;
+                        padding: 12px 16px;
+                        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+                        color: white;
+                        border: 2px solid #4a90e2;
+                        border-radius: 8px;
+                        cursor: pointer;
+                        font-size: 14px;
+                        font-weight: 600;
+                        transition: all 0.2s ease;
+                        text-transform: uppercase;
+                        letter-spacing: 0.5px;
+                        box-shadow: 0 2px 4px rgba(74,144,226,0.2);
+                    "
+                    onmouseover="this.style.background='linear-gradient(135deg, #357abd 0%, #2968a3 100%)'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 4px 8px rgba(74,144,226,0.3)'"
+                    onmouseout="this.style.background='linear-gradient(135deg, #4a90e2 0%, #357abd 100%)'; this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 4px rgba(74,144,226,0.2)'">
+                        Submit
+                    </button>
+                </div>
             </div>
-            <div style="margin-bottom: 10px;">
-                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Ruckit Device ID:</label>
-                <input type="text" id="ruckit-device" value="${defaultDevice}" 
-                       style="width: 100%; padding: 6px; border: 1px solid #ddd; border-radius: 3px; box-sizing: border-box;">
-            </div>
-            <div style="margin-bottom: 15px;">
-                <label style="display: block; margin-bottom: 5px; font-weight: bold;">Ruckit Driver ID:</label>
-                <input type="text" id="ruckit-driver" value="${defaultDriver}" 
-                       style="width: 100%; padding: 6px; border: 1px solid #ddd; border-radius: 3px; box-sizing: border-box;">
-            </div>
-            <div style="display: flex; gap: 10px;">
-                <button id="ruckit-clear" style="
-                    flex: 1; 
-                    padding: 8px 12px; 
-                    background: #f5f5f5; 
-                    border: 1px solid #ddd; 
-                    border-radius: 3px; 
-                    cursor: pointer;
-                    font-size: 14px;
-                ">Clear</button>
-                <button id="ruckit-submit" style="
-                    flex: 1; 
-                    padding: 8px 12px; 
-                    background: #007bff; 
-                    color: white; 
-                    border: 1px solid #007bff; 
-                    border-radius: 3px; 
-                    cursor: pointer;
-                    font-size: 14px;
-                ">Submit</button>
-            </div>
+            
             <div id="ruckit-status" style="
-                margin-top: 10px; 
-                padding: 8px; 
-                border-radius: 3px; 
+                margin: 0 20px 20px 20px;
+                padding: 12px 16px;
+                border-radius: 8px;
                 display: none;
-                font-size: 12px;
+                font-size: 13px;
+                font-weight: 500;
+                border-left: 4px solid;
             "></div>
         `;
 
