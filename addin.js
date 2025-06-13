@@ -108,7 +108,7 @@ geotab.customButtons.ruckitDeviceMapping = (event, api, state) => {
             background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
             border: 2px solid #ff6b35;
             border-radius: 12px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,107,53,0.1);
+            box-shadow: 0 8px 25px #ff6b35, 0 0 0 1px #ff6b35;
             padding: 0;
             min-width: 320px;
             z-index: 10000;
