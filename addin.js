@@ -124,17 +124,17 @@ geotab.customButtons.ruckitDeviceMapping = (event, api, state) => {
         dropdown.innerHTML = `
             <!-- Header with logo space -->
             <div style="
-                background: linear-gradient(135deg, #ff6b35 0%, #ff8555 100%);
+                background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
                 padding: 16px 20px;
                 margin: 0;
                 border-bottom: 1px solid rgba(255,255,255,0.2);
             ">
                 <div style="display: flex; align-items: center; gap: 12px;">
                     <div id="company-logo" style="
-                        width: 32px;
-                        height: 32px;
+                        width: 48px;
+                        height: 48px;
                         background: rgba(255,255,255,0.2);
-                        border-radius: 6px;
+                        border-radius: 8px;
                         display: flex;
                         align-items: center;
                         justify-content: center;
@@ -143,7 +143,7 @@ geotab.customButtons.ruckitDeviceMapping = (event, api, state) => {
                         border: 1px solid rgba(255,255,255,0.3);
                     ">
                         <!-- Replace this div with your logo image -->
-                        <img src="https://traxxisgps.com/wp-content/uploads/elementor/thumbs/Traxxis-refresh-logo_horizontal-min-1-qjgvd5cr9kxu5eay6trn10pbylz31ardqnqdluuew0.webp" alt="Company Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 5px;">
+                        <img src="https://traxxisgps.com/wp-content/uploads/elementor/thumbs/Traxxis-refresh-logo_horizontal-min-1-qjgvd5cr9kxu5eay6trn10pbylz31ardqnqdluuew0.webp" alt="Company Logo" style="width: 100%; height: 100%; object-fit: contain; border-radius: 7px;">
                     </div>
                     <div style="
                         font-weight: 600;
@@ -179,7 +179,7 @@ geotab.customButtons.ruckitDeviceMapping = (event, api, state) => {
                             transition: all 0.2s ease;
                             background: #ffffff;
                         "
-                        onfocus="this.style.borderColor='#4a90e2'; this.style.boxShadow='0 0 0 3px rgba(74,144,226,0.1)'"
+                        onfocus="this.style.borderColor='#ff6b35'; this.style.boxShadow='0 0 0 3px rgba(255,107,53,0.1)'"
                         onblur="this.style.borderColor='#e1e8ed'; this.style.boxShadow='none'">
                 </div>
                 
@@ -204,7 +204,7 @@ geotab.customButtons.ruckitDeviceMapping = (event, api, state) => {
                             transition: all 0.2s ease;
                             background: #ffffff;
                         "
-                        onfocus="this.style.borderColor='#4a90e2'; this.style.boxShadow='0 0 0 3px rgba(74,144,226,0.1)'"
+                        onfocus="this.style.borderColor='#ff6b35'; this.style.boxShadow='0 0 0 3px rgba(255,107,53,0.1)'"
                         onblur="this.style.borderColor='#e1e8ed'; this.style.boxShadow='none'">
                 </div>
                 
@@ -229,7 +229,7 @@ geotab.customButtons.ruckitDeviceMapping = (event, api, state) => {
                             transition: all 0.2s ease;
                             background: #ffffff;
                         "
-                        onfocus="this.style.borderColor='#4a90e2'; this.style.boxShadow='0 0 0 3px rgba(74,144,226,0.1)'"
+                        onfocus="this.style.borderColor='#ff6b35'; this.style.boxShadow='0 0 0 3px rgba(255,107,53,0.1)'"
                         onblur="this.style.borderColor='#e1e8ed'; this.style.boxShadow='none'">
                 </div>
                 
